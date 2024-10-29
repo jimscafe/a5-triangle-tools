@@ -28,6 +28,11 @@ import triangle.syntacticAnalyzer.Scanner;
 import triangle.syntacticAnalyzer.SourceFile;
 import triangle.treeDrawer.Drawer;
 
+import com.sampullara.cli.Args;
+import com.sampullara.cli.Argument;
+
+import java.util.List;
+
 /**
  * The main driver class for the Triangle compiler.
  *
@@ -36,9 +41,14 @@ import triangle.treeDrawer.Drawer;
  */
 public class Compiler {
 
+	// How to use parser with sourceFile? Add here
+	@Argument(value = "source", description = "Source file path and name", required = true)
+	static String sourceName;
 	/** The filename for the object program, normally obj.tam. */
+	@Argument(value = "obj", description = "Object Name", required = false)
 	static String objectName = "obj.tam";
-	
+
+	@Argument(value = "tree", description = "Show An AST Tree", required = false)
 	static boolean showTree = false;
 	static boolean folding = false;
 
@@ -125,14 +135,18 @@ public class Compiler {
 	 */
 	public static void main(String[] args) {
 
+		System.out.println(args);
+
 		if (args.length < 1) {
 			System.out.println("Usage: tc filename [-o=outputfilename] [tree] [folding]");
 			System.exit(1);
 		}
-		
-		parseArgs(args);
 
-		String sourceName = args[0];
+		List<String> unparsed = Args.parseOrExit(Compiler.class, args);
+
+		//parseArgs(args);
+
+		//String sourceName = args[0];
 		
 		var compiledOK = compileProgram(sourceName, objectName, showTree, false);
 
