@@ -179,6 +179,7 @@ public final class Scanner {
 		case '^':
 		case '?':
 			takeIt();
+			// currentSpelling, currentChar
 			while (isOperator(currentChar))
 				takeIt();
 			return Token.Kind.OPERATOR;
@@ -271,6 +272,7 @@ public final class Scanner {
 		tok = new Token(kind, currentSpelling.toString(), pos);
 		if (debug)
 			System.out.println(tok);
+		//System.out.println(tok);
 		return tok;
 	}
 

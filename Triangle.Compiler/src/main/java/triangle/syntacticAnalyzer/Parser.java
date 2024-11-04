@@ -291,10 +291,22 @@ public class Parser {
 			} else {
 
 				Vname vAST = parseRestOfVname(iAST);
-				accept(Token.Kind.BECOMES);
-				Expression eAST = parseExpression();
-				finish(commandPos);
-				commandAST = new AssignCommand(vAST, eAST, commandPos);
+				// Change for ** command here SMH, create new assignCommend
+				if (currentToken.spelling.equals("**")) {
+					Expression e1AST = new VnameExpression(vAST, commandPos);
+					Operator oAST = new Operator("*", commandPos); // Convert to multiply
+					Expression e2AST = new VnameExpression(vAST, commandPos);
+					Expression eAST = new BinaryExpression(e1AST, oAST, e2AST, commandPos);
+					commandPos = currentToken.position;
+					commandAST = new AssignCommand(vAST, eAST, currentToken.position);
+					currentToken = lexicalAnalyser.scan();
+
+				} else {
+					accept(Token.Kind.BECOMES);
+					Expression eAST = parseExpression();
+					finish(commandPos);
+					commandAST = new AssignCommand(vAST, eAST, commandPos);
+				}
 			}
 		}
 			break;

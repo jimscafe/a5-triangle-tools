@@ -1,11 +1,24 @@
 let
-  var a : Integer
+  var a : Integer;
+  var n : integer
 in
 begin
   a := 0;
-  while a < 5 do
+  let var x : integer;
+  in
   begin
-    put('a');
-    a := a + 1;
+    while a < 5 do
+      begin
+        put('a');
+        a := a + 1;
+
+        begin
+            if a < 0 
+            then  n := 0
+            else  n := 1
+        end
+
+
+      end
   end
 end

@@ -1,0 +1,13 @@
+let
+    var a : Integer;
+    var n : Integer
+in
+    begin
+        a := 0;
+        while a < 10 do
+            begin
+                a := a + 1;
+                put('x')
+            end
+
+    end
